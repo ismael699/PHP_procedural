@@ -1,4 +1,8 @@
 <?php
+
+session_start();
+
+
 require_once '/app/env/variables.php';
 if (!empty($_FILES['image']) && $_FILES['image']['error'] === 0) { /* on verifie si ont upload une image et qu'elle n'a pas d'erreur */
     if ($_FILES['image']['size'] < 16000000) { /* on verifie la taille du fichier */
