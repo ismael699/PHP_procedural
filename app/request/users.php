@@ -107,3 +107,24 @@ function updateUser(int $id, string $firstName, string $lastName, string $email,
 
     return true;
 }
+
+
+/**
+ * Fonction qui supprime un user de la bdd
+ *
+ * @param integer $id
+ * @return boolean
+ */
+function deleteUser(int $id): bool {
+    global $db;
+
+    try {
+        $sqlStatement = $db->prepare("DELETE FROM users WHERE id = :id");
+        $sqlStatement->execute([
+            'id' => $id,
+        ]);
+    } catch(PDOException $error) {
+        return false;
+    }
+    return true;
+}

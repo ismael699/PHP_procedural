@@ -16,6 +16,8 @@ if (
     exit();
 }
 
+$_SESSION['token'] = (bin2hex(random_bytes(50)));
+
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +43,11 @@ if (
                         <p><strong>Email:</strong> <?= $user['email']; ?></p>
                         <div class="card-btn">
                             <a href="/admin/users/update.php?id=<?= $user['id']; ?>" class="btn btn-primary">Editer</a>
+                            <form action="/admin/users/delete.php" method="POST" onsubmit="return confirm('Etes-vous sur de vouloir supprimer ce user ?')">
+                                <input type="hidden" name="id" value="<?= $user['id']; ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
