@@ -1,59 +1,86 @@
 :root {
-    --primary: #1ddbde;
+    --primary: #29d196;
     --secondary: #e9b72e;
     --border-radius: 5px;
     --font-color: #0e0e0e;
     --white: #f1f1f1;
+    --default-box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.3);
 }
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-html, body {
+
+html,
+body {
     scroll-behavior: smooth;
     background: var(--white);
     color: var(--font-color);
     font-size: 1em;
 }
+
 body {
     background: radial-gradient(var(--white), #e1e1e1);
     min-height: 100vh;
 }
+
 a {
     color: inherit;
     text-decoration: none;
+    display: inline-block;
 }
-img, video, figure {
+
+img,
+video,
+figure {
     max-width: 100%;
     object-fit: cover;
 }
-ul, ol {
+
+ul,
+ol {
     list-style: none;
 }
+
 .container {
     width: 90%;
     margin: auto;
 }
+
 .btn {
     padding: 0.5em 1em;
     border-radius: var(--border-radius);
-    transition: .4s ease;
+    transition: 0.4s ease;
     border: none;
     cursor: pointer;
 }
+
 .btn-primary {
     background: var(--primary);
 }
+
 .btn-primary:hover {
     background: #21ab7b;
 }
-.btn-secondary{
+
+.btn-secondary {
     background: var(--secondary);
 }
+
 .btn-secondary:hover {
-    background: #e9b72e;
+    background: #bb9223;
 }
+
+.btn-light {
+    background: var(--white);
+}
+
+.btn-light:hover {
+    background: #cbcbcb;
+}
+
 .alert {
     border-radius: var(--border-radius);
     padding: 1em;
@@ -61,20 +88,33 @@ ul, ol {
     width: 90%;
     margin: 1em auto;
 }
-.alert-danger, .btn-danger {
+
+.alert-danger,
+.btn-danger,
+.alert-error {
     background: rgba(198, 29, 29, 0.8);
-    border: 1px solid rgba(198, 29, 29);
+    border: 1px solid rgb(198, 29, 29);
     color: var(--white);
 }
+
+.alert-success {
+    background: rgb(18, 167, 18);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background: rgba(156, 18, 18, 0.8);
+}
+
 .mt-2 {
     margin-top: 1em;
 }
+
 .text-center {
     text-align: center;
 }
 
-/**************** NAVBAR ***************/
-
+/******************************* NAVBAR ********************************/
 .navbar {
     position: sticky;
     top: 0;
@@ -91,21 +131,21 @@ ul, ol {
     gap: 1em;
     align-items: center;
 }
+
 .navbar-btn {
     margin-left: auto;
 }
 
-/**************** FORM ***************/
-
+/***************************** FORM ***************************/
 .form {
     border-radius: var(--border-radius);
     background: var(--white);
     border: 1px solid var(--primary);
-    padding: 1em 2em;
-    margin: 1em auto 0;
+    padding: 1em 5em;
+    margin: 1em auto;
     width: max-content;
     max-width: 100%;
-    box-shadow: 0px 0px 9px 1px rgb(0, 0, 0, 0.3);
+    box-shadow: var(--default-box-shadow);
 }
 
 .group-input {
@@ -114,20 +154,52 @@ ul, ol {
 
 form label {
     display: block;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
 }
 
-input, textarea {
+.checkbox label {
+    display: inline-block;
+}
+
+input,
+textarea {
     border: 1px solid var(--secondary);
     padding: 0.5em 1em;
     border-radius: var(--border-radius);
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
     border: 1px solid var(--primary);
 }
 
 form button {
     display: block;
     margin: auto;
+}
+
+/********************* CARD *****************/
+.card-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.card-list>.card {
+    width: 30%;
+}
+
+.card {
+    border-radius: var(--border-radius);
+    border: 1px solid grey;
+    padding: 1em;
+    box-shadow: var(--default-box-shadow);
+}
+
+.card-btn {
+    margin-top: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
