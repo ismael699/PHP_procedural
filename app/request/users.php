@@ -1,5 +1,7 @@
 <?php
 
+// toutes les fonctions sont ici
+
 require_once '/app/conf/mysql.php';
 
 function findAllUsers(): array
