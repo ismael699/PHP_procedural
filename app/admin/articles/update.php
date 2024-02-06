@@ -42,7 +42,11 @@ if (
     $oldTitle = $articles['title'];
 
     if ($oldTitle === $title || !findOneArticleByTitle($title)) {
-        if (updateArticle($articles['id'], $title, $description, $enable)) {
+        if ($_FILES['image']['size'] > 0 && $_FILES['image']['error'] === 0) {
+            $imageName = uploadArticleImage($_FILES['image'], $articles['imageName']);
+        }
+
+        if (updateArticle($articles['id'], $title, $description, $enable, isset($imageName) ? $imageName : null)) {
             $_SESSION['messages']['success'] = "Article mis a jour avec succes";
 
             http_response_code(302);
@@ -76,7 +80,7 @@ if (
         <?php require_once '/app/layout/messages.php'; ?>
         <section class="container mt-2">
             <h1 class="text-center">Modifier un article</h1>
-            <form action="<?= $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="POST" class="form mt-2">
+            <form action="<?= $_SERVER['PHP_SELF'] . '?id=' . $_GET['id']; ?>" method="POST" class="form mt-2" enctype="multipart/form-data">
                 <?php if (isset($errorMessage)) : ?>
                     <div class="alert alert-danger">
                         <?= $errorMessage; ?>
@@ -89,6 +93,13 @@ if (
                 <div class="group-input">
                     <label for="">Description:</label>
                     <textarea name="description" id="description" cols="30" rows="10" placeholder="Description" required><?= $articles['description']; ?></textarea>
+                </div>
+                <div class="group-input">
+                    <label for="image">Image:</label>
+                    <input type="file" name="image" id="image">
+                    <?php if($articles['imageName']) : ?>
+                        <img src="/uploads/articles/<?= $articles['imageName']; ?>" alt="" loading="lazy">
+                    <?php endif; ?>
                 </div>
                 <div class="group-input checkbox">
                     <input type="checkbox" name="enable" id="enable" <?= $articles['enable'] ? 'checked' : null; ?>>

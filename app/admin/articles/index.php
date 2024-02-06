@@ -36,9 +36,13 @@ $_SESSION['token'] = bin2hex(random_bytes(50)); // pour proteger les infos avant
         <?php require_once '/app/layout/messages.php'; ?>
         <section class="container mt-2">
             <h1 class="text-center">Articles</h1>
+            <a href="/admin/articles/create.php" class="btn btn-primary">Créer un article</a>
             <div class="card-list mt-2">
                 <?php foreach (findAllArticles() as $articles) : ?>
                     <div class="card">
+                        <?php if($articles['imageName']): ?>
+                            <img src="/uploads/articles/<?= $articles['imageName']; ?>" alt="" loading="lazy">
+                        <?php endif; ?>
                         <h2 class="card-header"><?= "$articles[title]"; ?></h2>
                         <em><strong>Date:</strong><?= convertDateArticle($articles['createdAt'], 'd/m/y'); ?></em> 
                         <p><strong>Description</strong> <?= substr($articles['description'], 0, 150) . '...'; ?></p> 

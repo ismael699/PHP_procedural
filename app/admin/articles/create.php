@@ -23,6 +23,7 @@ if (
     !empty($_POST['titre']) &&
     !empty($_POST['description'])
 ) {
+
     // nettoyage des données 
     $titre = strip_tags($_POST['titre']);
     $description = strip_tags($_POST['description']);
@@ -30,8 +31,13 @@ if (
 
     // verifier si le titre n'existe pas deja 
     if (!findOneArticleBYTitle($titre)) {
+        // et s'il y a une image
+        if ($_FILES['image']['size'] > 0 && $_FILES['image']['error'] === 0) {
+            $imageName = uploadArticleImage($_FILES['image']);
+        }
+
         // on renvoie les données en bdd
-        if (createArticle($titre, $description, $enable)) {
+        if (createArticle($titre, $description, $enable, isset($imageName) ? $imageName : null)) {
             $_SESSION['messages']['success'] = "Article crée avec succès";
 
             http_response_code(302);
@@ -46,8 +52,6 @@ if (
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errorMessage = "Veuillez remplir les champs obligatoires";
 }
-
-
 
 
 ?>
@@ -68,7 +72,7 @@ if (
         <?php require_once '/app/layout/messages.php'; ?>
         <section class="container mt-2">
             <h1 class="text-center">Création d'un article</h1>
-            <form action="<?= $_SERVER['PHP_SELF']; ?>" method="POST" class="form mt-2">
+            <form action="<?= $_SERVER['PHP_SELF']; ?>" method="POST" class="form mt-2" enctype="multipart/form-data">
                 <?php if (isset($errorMessage)) : ?>
                     <div class="alert alert-danger">
                         <?= $errorMessage; ?>
@@ -81,6 +85,10 @@ if (
                 <div class="group-input">
                     <label for="">Description:</label>
                     <textarea name="description" id="description" cols="30" rows="10" placeholder="Description" required></textarea>
+                </div>
+                <div class="group-input">
+                    <label for="image">Image:</label>
+                    <input type="file" name="image" id="image">
                 </div>
                 <div class="group-input checkbox">
                     <input type="checkbox" name="enable" id="enable">
