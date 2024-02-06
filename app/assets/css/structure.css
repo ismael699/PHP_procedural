@@ -136,6 +136,40 @@ ol {
     margin-left: auto;
 }
 
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    min-width: 10em;
+    padding: 1em;
+    background: var(--secondary);
+    border-radius: var(--border-radius);
+    box-shadow: var(--default-box-shadow);
+    display: none;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdown-content a {
+    width: 100%;
+    text-align: center;
+    padding: 1em 0;
+}
+
+.dropdown-content a:not(:first-child) {
+    border-top: 1px solid grey;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+}
+
 /***************************** FORM ***************************/
 .form {
     border-radius: var(--border-radius);

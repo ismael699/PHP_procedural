@@ -2,7 +2,7 @@
 
 require_once '/app/conf/mysql.php';
 
-function findAllArticles(): array
+function findAllArticles(): array    // permet de recuperer les articles en bdd
 {
     global $db;
 
@@ -12,6 +12,9 @@ function findAllArticles(): array
     return $sqlStatement->fetchAll();
 }
 
+function convertDateArticle(string $date, string $format): string {     // convertis la date dans un autre format
+    return (new DateTime($date))->format($format);
+}
 
 /**
  * Undocumented function
