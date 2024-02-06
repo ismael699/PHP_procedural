@@ -151,3 +151,26 @@ function uploadArticleImage(array $image, ?string $oldImageName = null): bool|st
 
     return false;
 }
+
+
+/**
+ * *
+ *
+ * @param integer $id
+ * @return boolean
+ */
+function deleteArticle(int $id): bool
+{
+    global $db; // permet "connecter" avec la bdd
+
+    try {
+        $sqlStatement = $db->prepare("DELETE FROM articles WHERE id = :id"); // prepare la requette en format sql
+        $sqlStatement->execute([ 
+            'id' => $id,
+        ]); // execute la requette dans la bdd
+    } catch(PDOException $error) {
+        return false;
+    } // sinon si y'a une erreur renvoie false - 'PDOException' est une fonction propre a PHP donc obliger de le mettre
+    return true; // ou renvoie true
+}
+

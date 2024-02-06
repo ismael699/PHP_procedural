@@ -6,7 +6,7 @@ session_start();
 require_once '/app/request/articles.php';
 require_once '/app/env/variables.php';
 
-// verifier les droits utilisateurs connecter
+// verifier les droits d'accès a utilisateurs, connecter ou non
 if (
     empty($_SESSION['LOGGED_USER']) || // si l'utilisateur n'est pas connecter 
     !in_array('ROLE_ADMIN', $_SESSION['LOGGED_USER']['roles']) // ou s'il na pas le role admin
