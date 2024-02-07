@@ -15,6 +15,7 @@
                             <div class="dropdown-content">
                                 <a href="/admin/users">Users</a>
                                 <a href="/admin/articles">Articles</a>
+                                <a href="/admin/categories">Categorie</a>
                             </div>
                     </div>
                 <?php endif; ?>

@@ -12,6 +12,7 @@ function findAllArticles(): array    // permet de recuperer les articles en bdd
     return $sqlStatement->fetchAll();
 }
 
+
 function convertDateArticle(string $date, string $format): string
 {     // convertis la date dans un autre format
     return (new DateTime($date))->format($format);
@@ -23,7 +24,7 @@ function convertDateArticle(string $date, string $format): string
  *
  * @return array
  */
-function findAllArticlesWithAutor(): array 
+function findAllArticlesWithAutor(): array
 {
     global $db;
 
@@ -54,6 +55,7 @@ function findOneArticleByTitle(string $title): bool|array
 }
 
 
+
 /**
  * Undocumented function
  *
@@ -70,6 +72,7 @@ function findOneArticleById(int $id): bool|array
     ]);
     return $sqlStatement->fetch();
 }
+
 
 
 /**
@@ -95,8 +98,8 @@ function updateArticle(int $id, string $title, string $description, int $enable,
             'enable' => $enable,
         ];
 
-        if($imageName) {
-            $query .=", imageName = :imageName";
+        if ($imageName) {
+            $query .= ", imageName = :imageName";
             $params['imageName'] = $imageName;
         }
 
@@ -148,6 +151,7 @@ function createArticle(string $title, string $description, int $enable, int $aut
 }
 
 
+
 function uploadArticleImage(array $image, ?string $oldImageName = null): bool|string // verifie la taille, les extension d'une image
 {
     if ($image['size'] < 16000000) { // taille
@@ -172,6 +176,7 @@ function uploadArticleImage(array $image, ?string $oldImageName = null): bool|st
 }
 
 
+
 /**
  * *
  *
@@ -184,12 +189,11 @@ function deleteArticle(int $id): bool
 
     try {
         $sqlStatement = $db->prepare("DELETE FROM articles WHERE id = :id"); // prepare la requette en format sql
-        $sqlStatement->execute([ 
+        $sqlStatement->execute([
             'id' => $id,
         ]); // execute la requette dans la bdd
-    } catch(PDOException $error) {
+    } catch (PDOException $error) {
         return false;
     } // sinon si y'a une erreur renvoie false - 'PDOException' est une fonction propre a PHP donc obliger de le mettre
     return true; // ou renvoie true
 }
-

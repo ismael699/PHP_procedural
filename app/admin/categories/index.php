@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once '/app/request/articles.php'; // relie les doc
+require_once '/app/request/categories.php'; // relie les doc
 require_once '/app/env/variables.php';
 
 if (
@@ -26,7 +26,7 @@ $_SESSION['token'] = bin2hex(random_bytes(50)); // pour proteger les infos avant
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin article index | My first app PHP</title>
+    <title>Admin categorie index | My first app PHP</title>
     <link rel="stylesheet" href="<?= $cssPath; ?>structure.css">
 </head>
 
@@ -35,23 +35,20 @@ $_SESSION['token'] = bin2hex(random_bytes(50)); // pour proteger les infos avant
     <main>
         <?php require_once '/app/layout/messages.php'; ?>
         <section class="container mt-2">
-            <h1 class="text-center">Articles</h1>
-            <a href="/admin/articles/create.php" class="btn btn-primary">Créer un article</a>
+            <h1 class="text-center">Catégories</h1>
+            <a href="/admin/categories/create.php" class="btn btn-primary">Ajouter une catégorie</a>
             <div class="card-list mt-2">
-                <?php foreach (findAllArticlesWithAutor() as $article) : ?> 
+                <?php foreach (findAllCategorie() as $categorie) : ?> 
                     <div class="card">
-                        <?php if ($article['imageName']) : ?>
-                            <img src="/uploads/articles/<?= $article['imageName']; ?>" alt="" loading="lazy">
+                        <?php if ($categorie['imageName']) : ?>
+                            <img src="/uploads/categories/<?= $categorie['imageName']; ?>" alt="" loading="lazy">
                         <?php endif; ?>
-                        <h2 class="card-header"><?= "$article[title]"; ?></h2>
-                        <em><strong>Date:</strong><?= convertDateArticle($article['createdAt'], 'd/m/y'); ?></em>
-                        <p><strong>Description</strong> <?= substr($article['description'], 0, 150) . '...'; ?></p>
-                        <em><strong>Auteur:</strong><?= "$article[firstName] $article[lastName]"; ?></em>
-                        <p><strong>Catégorie:</strong><?= "$article[id]"; ?></p>
+                        <h2 class="card-header"><?= "$categorie[title]"; ?></h2>
+                        <em><strong>Auteur:</strong><?= "$categorie[id]"; ?></em>
                         <div class="card-btn">
-                            <a href="/admin/articles/update.php?id=<?= $article['id']; ?>" class="btn btn-primary">Editer</a>
-                            <form action="/admin/articles/delete.php" method="POST" onsubmit="return confirm('Etes-vous sur de vouloir supprimer ce titre ?')">
-                                <input type="hidden" name="id" value="<?= $article['id']; ?>">
+                            <a href="/admin/categories/update.php?id=<?= $categorie['id']; ?>" class="btn btn-primary">Editer</a> 
+                            <form action="/admin/categories/delete.php" method="POST" onsubmit="return confirm('Etes-vous sur de vouloir supprimer cette catégorie ?')">
+                                <input type="hidden" name="id" value="<?= $categorie['id']; ?>">
                                 <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form>
