@@ -38,18 +38,19 @@ $_SESSION['token'] = bin2hex(random_bytes(50)); // pour proteger les infos avant
             <h1 class="text-center">Articles</h1>
             <a href="/admin/articles/create.php" class="btn btn-primary">Créer un article</a>
             <div class="card-list mt-2">
-                <?php foreach (findAllArticles() as $articles) : ?>
+                <?php foreach (findAllArticlesWithAutor() as $article) : ?> 
                     <div class="card">
-                        <?php if($articles['imageName']): ?>
-                            <img src="/uploads/articles/<?= $articles['imageName']; ?>" alt="" loading="lazy">
+                        <?php if ($article['imageName']) : ?>
+                            <img src="/uploads/articles/<?= $article['imageName']; ?>" alt="" loading="lazy">
                         <?php endif; ?>
-                        <h2 class="card-header"><?= "$articles[title]"; ?></h2>
-                        <em><strong>Date:</strong><?= convertDateArticle($articles['createdAt'], 'd/m/y'); ?></em> 
-                        <p><strong>Description</strong> <?= substr($articles['description'], 0, 150) . '...'; ?></p> 
+                        <h2 class="card-header"><?= "$article[title]"; ?></h2>
+                        <em><strong>Date:</strong><?= convertDateArticle($article['createdAt'], 'd/m/y'); ?></em>
+                        <p><strong>Description</strong> <?= substr($article['description'], 0, 150) . '...'; ?></p>
+                        <em><strong>Auteur:</strong><?= "$article[firstName] $article[lastName]"; ?></em>
                         <div class="card-btn">
-                            <a href="/admin/articles/update.php?id=<?= $articles['id']; ?>" class="btn btn-primary">Editer</a>
+                            <a href="/admin/articles/update.php?id=<?= $article['id']; ?>" class="btn btn-primary">Editer</a>
                             <form action="/admin/articles/delete.php" method="POST" onsubmit="return confirm('Etes-vous sur de vouloir supprimer ce titre ?')">
-                                <input type="hidden" name="id" value="<?= $articles['id']; ?>">
+                                <input type="hidden" name="id" value="<?= $article['id']; ?>">
                                 <input type="hidden" name="token" value="<?= $_SESSION['token']; ?>">
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form>

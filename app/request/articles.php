@@ -19,6 +19,24 @@ function convertDateArticle(string $date, string $format): string
 
 
 /**
+ * * // Lie des infos via la bdd
+ *
+ * @return array
+ */
+function findAllArticlesWithAutor(): array 
+{
+    global $db;
+
+    $query = "SELECT a.id, a.title, a.description, a.createdAt, a.enable, a.imageName, u.firstName, u.lastName FROM articles a JOIN users u ON a.auteurId = u.id";
+
+    $sqlStatement = $db->prepare($query);
+    $sqlStatement->execute();
+
+    return $sqlStatement->fetchAll();
+}
+
+
+/**
  * Undocumented function
  *
  * @param string $title
@@ -102,7 +120,7 @@ function updateArticle(int $id, string $title, string $description, int $enable,
  * @param string|null $imageName
  * @return boolean
  */
-function createArticle(string $title, string $description, int $enable, ?string $imageName): bool
+function createArticle(string $title, string $description, int $enable, int $auteurId, ?string $imageName): bool
 {
     global $db;
 
@@ -111,13 +129,14 @@ function createArticle(string $title, string $description, int $enable, ?string 
             'title' => $title,
             'description' => $description,
             'enable' => $enable,
+            'auteurId' => $auteurId,
         ];
 
         if ($imageName) {
-            $query = "INSERT INTO articles(title, description, enable, imageName) VALUES (:title, :description, :enable, :imageName)";
+            $query = "INSERT INTO articles(title, description, enable, imageName, auteurId) VALUES (:title, :description, :enable, :imageName, :auteurId)";
             $params['imageName'] = $imageName;
         } else {
-            $query = "INSERT INTO articles(title, description, enable) VALUES (:title, :description, :enable)";
+            $query = "INSERT INTO articles(title, description, enable, auteurId) VALUES (:title, :description, :enable, :auteurId)";
         }
 
         $sqlStatement = $db->prepare($query);
@@ -161,7 +180,7 @@ function uploadArticleImage(array $image, ?string $oldImageName = null): bool|st
  */
 function deleteArticle(int $id): bool
 {
-    global $db; // permet "connecter" avec la bdd
+    global $db; // permet de "connecter" avec la bdd
 
     try {
         $sqlStatement = $db->prepare("DELETE FROM articles WHERE id = :id"); // prepare la requette en format sql

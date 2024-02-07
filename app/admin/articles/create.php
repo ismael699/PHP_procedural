@@ -37,7 +37,7 @@ if (
         }
 
         // on renvoie les données en bdd
-        if (createArticle($titre, $description, $enable, isset($imageName) ? $imageName : null)) {
+        if (createArticle($titre, $description, $enable, $_SESSION['LOGGED_USER']['id'], isset($imageName) ? $imageName : null)) {
             $_SESSION['messages']['success'] = "Article crée avec succès";
 
             http_response_code(302);
